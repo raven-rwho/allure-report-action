@@ -9,6 +9,7 @@ cp -r ./${INPUT_GH_PAGES}/. ./${INPUT_ALLURE_HISTORY}
 REPOSITORY_OWNER_SLASH_NAME=${INPUT_GITHUB_REPO}
 REPOSITORY_NAME=${REPOSITORY_OWNER_SLASH_NAME##*/}
 GITHUB_PAGES_WEBSITE_URL="https://${INPUT_GITHUB_REPO_OWNER}.github.io/${REPOSITORY_NAME}"
+DEEPTHOUGHT_URL="https://cmp-test.deepthought.cloud"
 #echo "Github pages url $GITHUB_PAGES_WEBSITE_URL"
 
 if [[ ${INPUT_SUBFOLDER} != '' ]]; then
@@ -20,7 +21,7 @@ if [[ ${INPUT_SUBFOLDER} != '' ]]; then
 fi
 
 #echo "index.html"
-echo "<!DOCTYPE html><meta charset=\"utf-8\"><meta http-equiv=\"refresh\" content=\"0; URL=./${INPUT_GITHUB_RUN_NUM}/\">" > ./${INPUT_ALLURE_HISTORY}/index.html # path
+echo "<!DOCTYPE html><meta charset=\"utf-8\"><meta http-equiv=\"refresh\" content=\"0; URL=${DEEPTHOUGHT_URL}/${INPUT_GITHUB_RUN_NUM}/\">" > ./${INPUT_ALLURE_HISTORY}/index.html # path
 echo "<meta http-equiv=\"Pragma\" content=\"no-cache\"><meta http-equiv=\"Expires\" content=\"0\">" >> ./${INPUT_ALLURE_HISTORY}/index.html
 #cat ./${INPUT_ALLURE_HISTORY}/index.html
 
