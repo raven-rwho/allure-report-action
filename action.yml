@@ -45,6 +45,10 @@ inputs:
     description: 'GitHub repository owner'
     required: true
     default: ${{ github.repository_owner }}
+  deployment_url:
+    description: 'URL if you do not wnat to deploy it on Github Pages'
+    required: false
+    default: ''
 runs:
   using: 'docker'
   image: 'Dockerfile'
