@@ -11,14 +11,15 @@ REPOSITORY_NAME=${REPOSITORY_OWNER_SLASH_NAME##*/}
 GITHUB_PAGES_WEBSITE_URL="https://${INPUT_GITHUB_REPO_OWNER}.github.io/${REPOSITORY_NAME}"
  # DEEPTHOUGHT_URL="https://cmp-test.deepthought.cloud"
 DEEPTHOUGHT_URL=${INPUT_DEPLOYMENT_URL}
+
 #echo "Github pages url $GITHUB_PAGES_WEBSITE_URL"
 
 if [[ ${INPUT_SUBFOLDER} != '' ]]; then
     INPUT_ALLURE_HISTORY="${INPUT_ALLURE_HISTORY}/${INPUT_SUBFOLDER}"
     echo "NEW allure history folder ${INPUT_ALLURE_HISTORY}"
     mkdir -p ./${INPUT_ALLURE_HISTORY}
-    GITHUB_PAGES_WEBSITE_URL="${GITHUB_PAGES_WEBSITE_URL}/${INPUT_SUBFOLDER}"
-    echo "NEW github pages url ${GITHUB_PAGES_WEBSITE_URL}"
+    DEEPTHOUGHT_URL="${DEEPTHOUGHT_URL}/${INPUT_SUBFOLDER}"
+    echo "NEW github pages url ${DEEPTHOUGHT_URL}"
 fi
 
 #echo "index.html"
@@ -28,15 +29,15 @@ echo "<meta http-equiv=\"Pragma\" content=\"no-cache\"><meta http-equiv=\"Expire
 
 #echo "executor.json"
 echo '{"name":"GitHub Actions","type":"github","reportName":"Allure Report with history",' > executor.json
-echo "\"url\":\"${GITHUB_PAGES_WEBSITE_URL}\"," >> executor.json # ???
-echo "\"reportUrl\":\"${GITHUB_PAGES_WEBSITE_URL}/${INPUT_GITHUB_RUN_NUM}/\"," >> executor.json
+echo "\"url\":\"${DEEPTHOUGHT_URL}\"," >> executor.json # ???
+echo "\"reportUrl\":\"${DEEPTHOUGHT_URL}/${INPUT_GITHUB_RUN_NUM}/\"," >> executor.json
 echo "\"buildUrl\":\"https://github.com/${INPUT_GITHUB_REPO}/actions/runs/${INPUT_GITHUB_RUN_ID}\"," >> executor.json
 echo "\"buildName\":\"GitHub Actions Run #${INPUT_GITHUB_RUN_ID}\",\"buildOrder\":\"${INPUT_GITHUB_RUN_NUM}\"}" >> executor.json
 #cat executor.json
 mv ./executor.json ./${INPUT_ALLURE_RESULTS}
 
 #environment.properties
-echo "URL=${GITHUB_PAGES_WEBSITE_URL}" > environment.properties
+echo "URL=${DEEPTHOUGHT_URL}" > environment.properties
 mv ./environment.properties ./${INPUT_ALLURE_RESULTS}
 
 echo "keep allure history from ${INPUT_ALLURE_HISTORY}/last-history to ${INPUT_ALLURE_RESULTS}/history"
